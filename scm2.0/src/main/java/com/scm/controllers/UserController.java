@@ -26,7 +26,7 @@ public class UserController {
     
     //user profile page
     @GetMapping("/profile")
-    public String userProfile() {
+    public String userProfile(Model model, Authentication authentication) {
 
         System.out.println("User Profile");
 
