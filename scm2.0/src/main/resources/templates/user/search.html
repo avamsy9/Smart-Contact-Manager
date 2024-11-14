@@ -58,7 +58,7 @@
                     </form>
 
                     <div data-th-replace="~{message :: messagebox}"></div>
-                    
+
                     <table th:if="${pageContact.totalElements>0}"
                         class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -109,7 +109,10 @@
                                         <i class="fa-solid w-6 h-6 fa-trash"></i>
                                     </button>
 
-                                    <i class="fa-solid w-6 h-6 fa-pen"></i>
+                                    <!-- update contact -->
+                                    <a th:href="@{'/user/contacts/view/'+*{id}}">
+                                        <i class="fa-solid w-6 h-6 fa-pen"></i>
+                                    </a>
 
                                     <!-- viewcontact -->
                                     <button th:onclick="loadContactdata([[${c.id}]])">

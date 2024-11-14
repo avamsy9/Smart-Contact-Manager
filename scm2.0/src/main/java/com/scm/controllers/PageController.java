@@ -97,7 +97,11 @@ public class PageController {
         System.out.println(userForm);
 
         // Validate form data
-        if(rBindingResult.hasErrors()) {
+        if (rBindingResult.hasErrors()) {
+            session.setAttribute("message", Message.builder()
+                    .content("Please correct the following errors")
+                    .type(MessageType.red)
+                    .build());
             return "register";
         }
 

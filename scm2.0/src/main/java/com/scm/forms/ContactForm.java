@@ -46,6 +46,9 @@ public class ContactForm {
     // size
     // resolution
 
-    @ValidFile
+    @ValidFile(message="invalid file")
     private MultipartFile contactImage;
+
+    private String picture;
+
 }

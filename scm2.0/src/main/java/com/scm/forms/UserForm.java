@@ -2,6 +2,7 @@ package com.scm.forms;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -33,6 +34,7 @@ public class UserForm {
     @NotBlank(message = "About is Required")
     private String about;
 
-    @Size(min=8, max=12, message = "PhoneNumber is required")
+    @NotBlank(message = "PhoneNumber is required")
+    @Pattern(regexp = "^[0-9]{10}$", message = "Invalid Phone Number")
     private String phoneNumber;
 }
