@@ -31,10 +31,9 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-
-
 
 @Controller
 @RequestMapping("/user/contacts")
@@ -49,25 +48,26 @@ public class ContactController {
     @Autowired
     private ImageService imageService;
 
-    private Logger logger=LoggerFactory.getLogger(ContactController.class);
+    private Logger logger = LoggerFactory.getLogger(ContactController.class);
 
-    //add contact page handler
+    // add contact page handler
     @RequestMapping("/add")
     public String addContactView(Model model) {
 
-        ContactForm contactForm=new ContactForm();
+        ContactForm contactForm = new ContactForm();
         // contactForm.setName("A Vamsy Krishna");
         model.addAttribute("contactForm", contactForm);
         return "user/add_contact";
     }
-    
+
     @PostMapping("add")
-    public String saveContact(@Valid @ModelAttribute ContactForm contactForm,BindingResult result, Authentication authentication,HttpSession session) {
+    public String saveContact(@Valid @ModelAttribute ContactForm contactForm, BindingResult result,
+            Authentication authentication, HttpSession session) {
 
-        //process the form data
+        // process the form data
 
-        //validate form data
-        if(result.hasErrors()){
+        // validate form data
+        if (result.hasErrors()) {
 
             result.getAllErrors().forEach(error -> logger.info(error.toString()));
 
@@ -75,25 +75,25 @@ public class ContactController {
                     .content("Please correct the following errors")
                     .type(MessageType.red)
                     .build());
-                    
+
             return "user/add_contact";
         }
 
-        String username=Helper.getEmailOfLoggedInUser(authentication);
+        String username = Helper.getEmailOfLoggedInUser(authentication);
 
         // form ---> contact
-        User user=userService.getUserByEmail(username);
+        User user = userService.getUserByEmail(username);
 
-        //process the contact picture
+        // process the contact picture
 
-        //image Processing
+        // image Processing
 
-        //logger.info("File information :{}",contactForm.getContactImage().getOriginalFilename());
+        // logger.info("File information
+        // :{}",contactForm.getContactImage().getOriginalFilename());
 
-        String filename=UUID.randomUUID().toString();
+        String filename = UUID.randomUUID().toString();
 
-        String fileURL=imageService.uploadImage(contactForm.getContactImage(),filename);
-
+        String fileURL = imageService.uploadImage(contactForm.getContactImage(), filename);
 
         Contact contact = new Contact();
         contact.setName(contactForm.getName());
@@ -112,36 +112,36 @@ public class ContactController {
 
         System.out.println(contactForm);
 
-        //set the contact picture url
+        // set the contact picture url
 
-        //set message to be displayed on the view
-        session.setAttribute("message",Message.builder()
-                        .content("You have successfully added a new contact")
-                        .type(MessageType.green)
-                        .build());
+        // set message to be displayed on the view
+        session.setAttribute("message", Message.builder()
+                .content("You have successfully added a new contact")
+                .type(MessageType.green)
+                .build());
 
         return "redirect:/user/contacts/add";
     }
-    
-    //view contacts
+
+    // view contacts
     @RequestMapping
     public String viewContacts(
-        @RequestParam(value = "page",defaultValue = "0") int page,
-        @RequestParam(value = "size",defaultValue = AppConstants.PAGE_SIZE + "") int size,
-        @RequestParam(value = "sortBy",defaultValue = "name") String sortBy,
-        @RequestParam(value = "direction",defaultValue = "asc") String direction,
-        Model model,Authentication authentication){
+            @RequestParam(value = "page", defaultValue = "0") int page,
+            @RequestParam(value = "size", defaultValue = AppConstants.PAGE_SIZE + "") int size,
+            @RequestParam(value = "sortBy", defaultValue = "name") String sortBy,
+            @RequestParam(value = "direction", defaultValue = "asc") String direction,
+            Model model, Authentication authentication) {
 
-        //Load all the user Contacts
-        String username=Helper.getEmailOfLoggedInUser(authentication);
+        // Load all the user Contacts
+        String username = Helper.getEmailOfLoggedInUser(authentication);
 
-        User user=userService.getUserByEmail(username);
+        User user = userService.getUserByEmail(username);
 
-        Page<Contact> pageContact = contactService.getByUser(user,page,size,sortBy,direction);
+        Page<Contact> pageContact = contactService.getByUser(user, page, size, sortBy, direction);
 
         model.addAttribute("pageContact", pageContact);
         model.addAttribute("pageSize", AppConstants.PAGE_SIZE);
-        
+
         model.addAttribute("contactSearchForm", new ContactSearchForm());
         return "user/contacts";
     }
@@ -184,5 +184,23 @@ public class ContactController {
 
         return "user/search";
     }
-    
+
+    // detete contact
+    @RequestMapping("/delete/{contactId}")
+    public String deleteContact(@PathVariable("contactId") String contactId,HttpSession session) {
+
+        contactService.delete(contactId);
+        logger.info("contactId {} deleted", contactId);
+
+        session.setAttribute("message",
+                Message.builder()
+                        .content("Contact is Deleted successfully !! ")
+                        .type(MessageType.green)
+                        .build()
+
+        );
+
+        return "redirect:/user/contacts";
+    }
+
 }

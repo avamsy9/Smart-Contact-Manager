@@ -55,6 +55,8 @@
                                 </button>
                             </div>
                         </form>
+                        
+                        <div data-th-replace="~{message :: messagebox}"></div>
 
                         <table th:if="${pageContact.totalElements>0}"
                             class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
@@ -100,9 +102,18 @@
                                         </div>
                                     </td>
                                     <td class="px-6 py-4">
-                                        <i class="fa-solid w-6 h-6 fa-trash"></i>
+
+                                        <!-- delete contact -->
+                                        <button th:onclick="deleteContact([[${c.id}]])">
+                                            <i class="fa-solid w-6 h-6 fa-trash"></i>
+                                        </button>
+
                                         <i class="fa-solid w-6 h-6 fa-pen"></i>
-                                        <i class="fa-solid fa-eye"></i>
+
+                                        <!-- viewcontact -->
+                                        <button th:onclick="loadContactdata([[${c.id}]])">
+                                            <i class="fa-solid fa-eye"></i>
+                                        </button>
                                     </td>
                                 </tr>
                             </tbody>
@@ -143,10 +154,12 @@
 
                 </div>
             </div>
+
+            <div th:replace="~{ user/contact_modals :: contact}"></div>
         </div>
 
     </div>
-
+    <script th:src="@{'/js/contacts.js'}"></script>
     <script>
         console.log("All Contact Page")
     </script>
