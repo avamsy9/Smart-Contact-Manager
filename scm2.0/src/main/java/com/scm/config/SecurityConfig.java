@@ -62,6 +62,9 @@ public class SecurityConfig {
     @Autowired
     private OAuthAuthenticationSucessHandler handler;
 
+    @Autowired
+    private AuthFailureHandler authFailureHandler;
+
     // Configuration of Authentication provider spring security
     @Bean
     public DaoAuthenticationProvider authenticationProvider(){
@@ -115,13 +118,7 @@ public class SecurityConfig {
                 }
             });
 
-            formLogin.failureHandler(new AuthenticationFailureHandler() {
-                @Override
-                public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
-                                                    AuthenticationException exception) throws IOException, ServletException {
-                    response.sendRedirect("/login?error=true"); // Redirect back to the login page with an error
-                }
-            });
+            formLogin.failureHandler(authFailureHandler);
 
         });
 
