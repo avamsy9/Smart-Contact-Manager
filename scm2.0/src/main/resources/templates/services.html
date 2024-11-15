@@ -1,15 +1,109 @@
 <!DOCTYPE html>
-<html lang="en" th:replace="~{base :: parent(~{::#content},~{::title},~{})}">
+<html lang="en" th:replace="~{base :: parent(~{::#content},~{::title},~{::script})}">
 <head>
-    <title>Services Page</title>
+    <title>Our Services - Smart Contact Manager</title>
 </head>
 <body>
-    <section id="content">
-        <h1>Welcome to services page</h1>
-        <h2>Services offered by SCM</h2>
-    </section>
+    <div id="content">
+
+        <!-- Services Banner Section -->
+        <section class="bg-blue-600 text-white py-20 animate__animated animate__fadeInDown">
+            <div class="container mx-auto text-center">
+                <h1 class="text-4xl font-bold mb-4">Our Services</h1>
+                <p class="text-lg">Comprehensive solutions for managing your contacts effortlessly and securely.</p>
+            </div>
+        </section>
+
+        <!-- Services Overview Section -->
+        <section class="py-20 bg-white">
+            <div class="container mx-auto text-center">
+                <h2 class="text-3xl font-bold mb-8">What We Offer</h2>
+                <p class="text-lg text-gray-700 max-w-2xl mx-auto">
+                    Smart Contact Manager provides powerful and secure tools to organize, protect, and access your contacts anytime, anywhere.
+                </p>
+            </div>
+        </section>
+
+        <!-- Individual Services Section -->
+        <section class="py-20 bg-gray-100">
+            <div class="container mx-auto text-center">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Service 1 -->
+                    <div class="p-6 bg-white rounded shadow-lg hover:shadow-xl transition duration-300 transform hover:scale-105">
+                        <i class="fas fa-address-book text-blue-600 text-4xl mb-4"></i>
+                        <h3 class="text-xl font-semibold mb-2">Contact Management</h3>
+                        <p class="text-gray-600">
+                            Add, edit, and categorize your contacts in a user-friendly interface, making it easy to keep your contacts organized and up-to-date.
+                        </p>
+                    </div>
+
+                    <!-- Service 2 -->
+                    <div class="p-6 bg-white rounded shadow-lg hover:shadow-xl transition duration-300 transform hover:scale-105">
+                        <i class="fas fa-lock text-blue-600 text-4xl mb-4"></i>
+                        <h3 class="text-xl font-semibold mb-2">Secure Data Storage</h3>
+                        <p class="text-gray-600">
+                            Rest assured that your contact data is protected with advanced encryption and secure storage solutions to keep your information safe.
+                        </p>
+                    </div>
+
+                    <!-- Service 3 -->
+                    <div class="p-6 bg-white rounded shadow-lg hover:shadow-xl transition duration-300 transform hover:scale-105">
+                        <i class="fas fa-cloud text-blue-600 text-4xl mb-4"></i>
+                        <h3 class="text-xl font-semibold mb-2">24/7 Cloud Access</h3>
+                        <p class="text-gray-600">
+                            Access your contacts anytime, anywhere, from any device, ensuring your data is always within reach when you need it.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Additional Benefits Section -->
+        <section class="py-20 bg-white">
+            <div class="container mx-auto text-center">
+                <h2 class="text-3xl font-bold mb-8">Why Choose Us?</h2>
+                <p class="text-lg text-gray-700 max-w-2xl mx-auto mb-12">
+                    Smart Contact Manager is designed with you in mind. Our secure and user-friendly platform is packed with features to make contact management easy and efficient.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="p-6 bg-gray-100 rounded shadow-lg hover:shadow-xl transition duration-300">
+                        <h3 class="text-xl font-semibold mb-2">Real-Time Updates</h3>
+                        <p class="text-gray-600">
+                            Any changes you make to your contacts are instantly saved and accessible across all your devices.
+                        </p>
+                    </div>
+                    <div class="p-6 bg-gray-100 rounded shadow-lg hover:shadow-xl transition duration-300">
+                        <h3 class="text-xl font-semibold mb-2">Advanced Search & Filters</h3>
+                        <p class="text-gray-600">
+                            Quickly find contacts with advanced search and filtering options tailored to your needs.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Call to Action Section -->
+        <section class="bg-blue-600 text-white py-20">
+            <div class="container mx-auto text-center">
+                <h2 class="text-3xl font-bold mb-4">Ready to Simplify Your Contact Management?</h2>
+                <p class="text-lg mb-8">Experience the best contact management solution by signing up today!</p>
+                <a href="/register" class="bg-white text-blue-600 px-6 py-3 rounded-full font-semibold hover:bg-gray-100 transition duration-300">
+                    Get Started Now
+                </a>
+            </div>
+        </section>
+
+        <!-- Footer Section -->
+        <footer class="bg-gray-800 text-white py-8">
+            <div class="container mx-auto text-center">
+                <p>&copy; 2024 Smart Contact Manager. All rights reserved.</p>
+                <p>Follow us on <a href="#" class="text-blue-400">Facebook</a>, <a href="#" class="text-blue-400">Twitter</a>, and <a href="#" class="text-blue-400">Instagram</a>.</p>
+            </div>
+        </footer>
+
+    </div>
     <script>
-        console.log("Services page")
+        console.log("Service Page");
     </script>
 </body>
 </html>
