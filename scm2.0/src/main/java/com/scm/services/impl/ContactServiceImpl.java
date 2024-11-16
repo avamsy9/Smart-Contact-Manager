@@ -1,5 +1,6 @@
 package com.scm.services.impl;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -111,6 +112,22 @@ public class ContactServiceImpl implements ContactService {
         var pageable = PageRequest.of(page, size, sort);
 
         return contactRepo.findByUserAndPhoneNumberContaining(user, phoneNumberKeyword, pageable);
+    }
+
+    // Get recent contacts (e.g., created in the last 30 days)
+    public List<Contact> getRecentContacts(User user) {
+        LocalDateTime thirtyDaysAgo = LocalDateTime.now().minusDays(30);
+        return contactRepo.findByUserAndCreatedDateAfter(user, thirtyDaysAgo);
+    }
+
+    // Get total number of contacts for the user
+    public long getTotalContactsCount(User user) {
+        return contactRepo.countByUser(user);
+    }
+
+    // Get favorite contacts for the user
+    public long getFavoriteContacts(User user) {
+        return contactRepo.findByUserAndFavoriteTrue(user);
     }
 
 }

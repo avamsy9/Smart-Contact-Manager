@@ -1,20 +1,94 @@
 <!DOCTYPE html>
 <html lang="en" th:replace="~{base :: parent(~{::#content},~{::title},~{::script})}">
+
 <head>
     <title th:text="${loggedInUser.name}+' | SCM'">Dashboard Page</title>
 </head>
+
 <body>
     <div id="content">
 
-         <!-- If user is Logged in : sidebar-->
+        <!-- If user is Logged in : sidebar-->
         <div th:if="${loggedInUser}">
             <div th:replace="~{user/sidebar :: sidebar}"></div>
         </div>
 
         <div class="sm:pl-64 pt-20" style="height: 1000px">
-            <h1>Welcome to Dashboard page</h1>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio, rem.</p>
+
+            <div class="w-full p-6 space-y-6">
+
+                <div class="text-center">
+                    <h2 class="text-3xl font-semibold">Dashboard</h2>
+                    <p class="text-gray-600 dark:text-gray-400">Welcome to your Smart Contact Manager Dashboard</p>
+                </div>
+
+
+                <!-- Stats Cards Section -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-6 max-w-6xl mx-auto">
+                    <!-- Total Contacts Card -->
+                    <div
+                        class="bg-white dark:bg-gray-800 shadow-lg rounded-lg p-6 transition transform hover:scale-105 hover:shadow-xl">
+                        <h3 class="text-xl font-semibold text-blue-800 dark:text-blue-400">Total Contacts</h3>
+                        <p th:text="${totalContacts}" class="text-4xl font-bold text-gray-900 dark:text-gray-100 mt-2">
+                            250</p>
+                        <div class="mt-4 flex items-center space-x-2 text-gray-500 dark:text-gray-300">
+                            <svg class="w-5 h-5 text-blue-500 dark:text-blue-400" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M3 4a1 1 0 011 1v14a1 1 0 01-1 1h18a1 1 0 001-1V5a1 1 0 00-1-1H3z"></path>
+                            </svg>
+                            <span class="text-sm">All your saved contacts</span>
+                        </div>
+                    </div>
+
+                    <!-- Favourite Contacts Card -->
+                    <div
+                        class="bg-white dark:bg-gray-800 shadow-lg rounded-lg p-6 transition transform hover:scale-105 hover:shadow-xl">
+                        <h3 class="text-xl font-semibold text-green-800 dark:text-green-400">Favourite Contacts</h3>
+                        <p th:text="${favoriteContacts}"
+                            class="text-4xl font-bold text-gray-900 dark:text-gray-100 mt-2">130</p>
+                        <div class="mt-4 flex items-center space-x-2 text-gray-500 dark:text-gray-300">
+                            <svg class="w-5 h-5 text-green-500 dark:text-green-400" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M5.25 12.75l4.5 4.5 9-9"></path>
+                            </svg>
+                            <span class="text-sm">Contacts marked as favorites</span>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <!-- Recent Contacts Table -->
+                <div class="bg-white dark:bg-gray-700 shadow-md rounded-lg p-6">
+                    <h3 class="text-2xl font-semibold mb-4">Recent Contacts</h3>
+                    <table class="min-w-full bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200">
+                        <thead>
+                            <tr class="bg-gray-200 dark:bg-gray-600 text-gray-800 dark:text-gray-200">
+                                <th class="py-2 px-4">Name</th>
+                                <th class="py-2 px-4">Email</th>
+                                <th class="py-2 px-4">Phone</th>
+                                <th class="py-2 px-4">Address</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="contact : ${recentContacts}"
+                                class="border-b border-gray-200 dark:border-gray-600">
+                                <td th:text="${contact.name}" class="py-2 px-4"></td>
+                                <td th:text="${contact.email}" class="py-2 px-4"></td>
+                                <td th:text="${contact.phoneNumber}" class="py-2 px-4"></td>
+                                <td th:text="${contact.address}" class="py-2 px-4"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+
+            </div>
         </div>
+
+    </div>
 
     </div>
 
@@ -22,4 +96,5 @@
         console.log("Dashboard Page")
     </script>
 </body>
+
 </html>

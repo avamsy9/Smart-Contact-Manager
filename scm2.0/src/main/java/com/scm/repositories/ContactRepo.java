@@ -1,5 +1,6 @@
 package com.scm.repositories;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
@@ -29,4 +30,15 @@ public interface ContactRepo extends JpaRepository<Contact,String>{
     Page<Contact> findByUserAndEmailContaining(User user, String emailkeyword, Pageable pageable);
 
     Page<Contact> findByUserAndPhoneNumberContaining(User user, String phonekeyword, Pageable pageable);
+
+    // Find recent contacts (for example, contacts created in the last 30 days)
+    List<Contact> findByUserAndCreatedDateAfter(User user, LocalDateTime dateTime);
+
+    // Get total number of contacts for a user
+    long countByUser(User user);
+
+    // Find favorite contacts by user
+    @Query("SELECT COUNT(c) FROM Contact c WHERE c.user = :user AND c.favorite = true")
+    long findByUserAndFavoriteTrue(User user);
+
 }

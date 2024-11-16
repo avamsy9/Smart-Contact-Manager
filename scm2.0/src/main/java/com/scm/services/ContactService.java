@@ -9,30 +9,41 @@ import com.scm.entities.Contact;
 import com.scm.entities.User;
 
 public interface ContactService {
-    //save contacts
+    // save contacts
     Contact save(Contact contact);
 
-    //update contacts
+    // update contacts
     Contact update(Contact contact);
 
-    //get contacts
+    // get contacts
     List<Contact> getAll();
 
-    //get contact by id
+    // get contact by id
     Contact getById(String id);
 
-    //delete contact
+    // delete contact
     void delete(String id);
 
-     // search contact
-     Page<Contact> searchByName(String nameKeyword, int size, int page, String sortBy, String order, User user);
+    // search contact
+    Page<Contact> searchByName(String nameKeyword, int size, int page, String sortBy, String order, User user);
 
-     Page<Contact> searchByEmail(String emailKeyword, int size, int page, String sortBy, String order, User user);
- 
-     Page<Contact> searchByPhoneNumber(String phoneNumberKeyword, int size, int page, String sortBy, String order,User user);
+    Page<Contact> searchByEmail(String emailKeyword, int size, int page, String sortBy, String order, User user);
 
-    //get contact by user id
+    Page<Contact> searchByPhoneNumber(String phoneNumberKeyword, int size, int page, String sortBy, String order,
+            User user);
+
+    // get contact by user id
     List<Contact> getByUserId(String userId);
 
-    Page<Contact> getByUser(User user,int page,int size,String sortField,String sortDirection);
+    Page<Contact> getByUser(User user, int page, int size, String sortField, String sortDirection);
+
+    // Get recent contacts (e.g., created in the last 30 days)
+    public List<Contact> getRecentContacts(User user);
+
+    // Get total number of contacts for the user
+    public long getTotalContactsCount(User user);
+
+    // Get favorite contacts for the user
+    public long getFavoriteContacts(User user);
+
 }
