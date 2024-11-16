@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="~{base :: parent(~{::#content},~{::title},~{::script})}">
+
+<head>
+    <title>Feedback Page</title>
+
+    <style>
+        /* CSS for responsiveness and smooth transitions */
+        .rating-container {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            /* Makes sure it is responsive on smaller screens */
+        }
+
+        .rating-container label {
+            font-size: 2rem;
+            transition: color 0.3s ease;
+        }
+
+        .rating-container input:checked~label {
+            color: #fbbf24;
+            /* Yellow color when selected */
+        }
+
+        /* Responsive design for smaller screens */
+        @media (max-width: 600px) {
+            .rating-container label {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+    <div id="content">
+
+        <!-- If user is Logged in : sidebar-->
+        <div th:if="${loggedInUser}">
+            <div th:replace="~{user/sidebar :: sidebar}"></div>
+        </div>
+
+        <div class="sm:pl-64 pt-20" style="height: 1000px">
+            <div class="grid grid-cols-12">
+                <div class="col-span-3"></div>
+                <div class="col-span-12 md:col-span-6">
+                    <div
+                        class="card block p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+
+                        <h1 class="text-2xl font-semibold">We Value Your Feedback</h1>
+                        <p class="text-gray-500">
+                            Your feedback helps us improve the Smart Contact Manager. Please take a moment to share your
+                            thoughts.
+                        </p>
+
+                        <div data-th-replace="~{message :: messagebox}"></div>
+
+                        <form action="" th:action="@{'/user/feedback'}" th:object="${feedbackForm}" method="post"
+                            class="mt-8" novalidate>
+
+                            <!-- Name form -->
+                            <div class="mb-3">
+                                <label for="input-group-1"
+                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                    Your Name
+                                </label>
+                                <input th:field="*{name}" type="text"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                    placeholder="Your Name" />
+                                <p class="text-red-500" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
+                            </div>
+
+                            <!-- Email form -->
+                            <div class="mb-3">
+                                <label for="input-group-2"
+                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                    Your Email
+                                </label>
+                                <input th:field="*{email}" type="email"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                    placeholder="example@gmail.com" />
+                                <p class="text-red-500" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
+                            </div>
+
+                            <!-- Rating form -->
+                            <div class="mb-3">
+                                <label for="rating"
+                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                    Rate Us
+                                </label>
+                                <div class="flex space-x-2 rating-container">
+                                    <input th:field="*{rating}" type="radio" value="1" id="rating1"
+                                        class="peer hidden" />
+                                    <label for="rating1"
+                                        class="cursor-pointer text-xl text-gray-400 hover:text-yellow-500">&#9733;</label>
+
+                                    <input th:field="*{rating}" type="radio" value="2" id="rating2"
+                                        class="peer hidden" />
+                                    <label for="rating2"
+                                        class="cursor-pointer text-xl text-gray-400 hover:text-yellow-500">&#9733;</label>
+
+                                    <input th:field="*{rating}" type="radio" value="3" id="rating3"
+                                        class="peer hidden" />
+                                    <label for="rating3"
+                                        class="cursor-pointer text-xl text-gray-400 hover:text-yellow-500">&#9733;</label>
+
+                                    <input th:field="*{rating}" type="radio" value="4" id="rating4"
+                                        class="peer hidden" />
+                                    <label for="rating4"
+                                        class="cursor-pointer text-xl text-gray-400 hover:text-yellow-500">&#9733;</label>
+
+                                    <input th:field="*{rating}" type="radio" value="5" id="rating5"
+                                        class="peer hidden" />
+                                    <label for="rating5"
+                                        class="cursor-pointer text-xl text-gray-400 hover:text-yellow-500">&#9733;</label>
+                                </div>
+                                <p class="text-red-500" th:if="${#fields.hasErrors('rating')}" th:errors="*{rating}">
+                                </p>
+                            </div>
+
+                            <!-- Feedback form -->
+                            <div class="mb-3">
+                                <label for="feedbackText"
+                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                    Your Feedback
+                                </label>
+                                <textarea th:field="*{feedbackText}" rows="4"
+                                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                    placeholder="Please share your thoughts"></textarea>
+                                <p class="text-red-500" th:if="${#fields.hasErrors('feedbackText')}"
+                                    th:errors="*{feedbackText}"></p>
+                            </div>
+
+                            <!-- Submit Button -->
+                            <div class="button-container text-center">
+                                <button type="submit"
+                                    class="px-3 py-2 dark:bg-blue-600 hover:dark:bg-blue-700 rounded bg-black text-white">
+                                    Submit Feedback
+                                </button>
+                                <button type="reset"
+                                    class="px-3 py-2 dark:bg-blue-600 hover:dark:bg-blue-700 rounded bg-black text-white">
+                                    Reset
+                                </button>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <script>
+        // JavaScript for real-time hover effect and selecting the rating
+        const stars = document.querySelectorAll('.rating-container label');
+
+        stars.forEach((star, index) => {
+            star.addEventListener('mouseover', () => {
+                // Highlight stars up to the hovered one
+                for (let i = 0; i <= index; i++) {
+                    stars[i].classList.add('text-yellow-500');
+                    stars[i].classList.remove('text-gray-400');
+                }
+            });
+
+            star.addEventListener('mouseout', () => {
+                // Reset the highlighted stars if no selection is made
+                stars.forEach((s) => {
+                    s.classList.add('text-gray-400');
+                    s.classList.remove('text-yellow-500');
+                });
+
+                // If the rating is selected, highlight the selected stars
+                const selectedRating = document.querySelector('input[type="radio"]:checked');
+                if (selectedRating) {
+                    const selectedValue = parseInt(selectedRating.value);
+                    for (let i = 0; i < selectedValue; i++) {
+                        stars[i].classList.add('text-yellow-500');
+                        stars[i].classList.remove('text-gray-400');
+                    }
+                }
+            });
+
+            star.addEventListener('click', () => {
+                // Highlight stars based on the selected rating
+                const selectedRating = parseInt(star.getAttribute('for').replace('rating', ''));
+                for (let i = 0; i < selectedRating; i++) {
+                    stars[i].classList.add('text-yellow-500');
+                    stars[i].classList.remove('text-gray-400');
+                }
+            });
+        });
+    </script>
+    <script th:src="@{'/js/admin.js'}"></script>
+    <script>
+        console.log("Feedback Page")
+    </script>
+</body>
+
+</html>
